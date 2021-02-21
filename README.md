@@ -27,13 +27,13 @@ install it, i.e. using pip:
 
 then in python import in your code with
 
-`from mdtex2html import mdTeX2html`
+`import mdtex2html`
 
 and convert your mdTeX with something like
 
-`mdTeX2html.convert('- Hello ${\sqrt{World}}^2$!')`
+`mdtex2html.convert('- Hello ${\sqrt{World}}^2$!')`
 
-passing any mdTeX-Code to `mdTeX2html.convert()`.
+passing any mdTeX-Code to `mdtex2html.convert()`.
 
 ## Dependencies
 
