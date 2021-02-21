@@ -3,9 +3,9 @@ python3-library to convert Markdown with included LaTeX-Formulas to HTML with Ma
 
 ## What is mdtex2html
 
-`mdtex2html` is a library to convert (Github-flavored) Markdown-Code with includes LaTex-formulas to HTML-Source. The Formulas are converted to MathML-Code.
+`mdtex2html` is a library to convert (Github-flavored) Markdown-Code with included LaTex-formulas to HTML-Source. The formulas are converted to MathML.
 
-An inline-formula can either start and end with `$` or it can start with `\(` and end with `\)`, according to valid LaTeX-Code. Block-formulas either start and end with `$$` or start with `\[` an end with `\]`.
+An inline-formula can either start and end with `$` or it can start with `\(` and end with `\)`, according to valid LaTeX-Code. Block-formulas either start and end with `$$` or start with `\[` and end with `\]`.
 
 An example that `mdtex2html` will convert:
 
@@ -16,14 +16,12 @@ TeX-Formula: $\sqrt2=x^2 \Rightarrow x=\sqrt{\sqrt{2}}$
 
 - This
 - is
-    - a List
-
-Delete this and write your own `mdTeX`!
+    - a List with `inline-Code`
 ```
 
 ## How to use mdtex2html
 
-install i.e. with
+install it, i.e. using pip:
 
 `python3 -m pip install mdtex2html`
 
@@ -31,17 +29,26 @@ then in python import in your code with
 
 `from mdtex2html import mdTeX2html`
 
-and convert your mdTeX with
+and convert your mdTeX with something like
 
 `mdTeX2html.convert('- Hello ${\sqrt{World}}^2$!')`
 
-passing any mdTeX-Code to it.
+passing any mdTeX-Code to `mdTeX2html.convert()`.
+
+## Dependencies
+
+This depends on:
+
+- [latex2html](https://github.com/roniemartinez/latex2mathml)
+- [Python-Markdown](https://github.com/Python-Markdown/markdown)
+
+The dependencies will be installed when installing using pip.
 
 ## Limitations
 
 The Firefox browser will display the result smoothly, as well as Safari (according to user reports).
 
-Just be aware, that the Cromium-engine still is not able to render MathML, but rumors say that in 2020 work has started again to make that happen, so maybe you want to check the status there.
+Just be aware that the Chromium-engine (Browsers: Chrome, Edge, ...) still is not able to render MathML properly, but rumors say that in 2020 work has started again to make that happen, so maybe you want to check the status there.
 
 ## Credits
 
