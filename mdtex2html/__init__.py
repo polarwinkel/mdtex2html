@@ -6,9 +6,9 @@ The Formulas will be in MathML-Format.
 block-equations need to start with $$ or \[
 inline-equations start with \( or $
 
-version 1.1
+version 1.1.0
 
-(c) 2020 by Dirk Winkel
+(c) 2020-2021 by Dirk Winkel
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,8 +33,8 @@ import re
 incomplete = '<font color="orange">Warning: Formula incomplete!</font>'
 convError = '<font color="red">ERROR converting TeX2mathml!</font>'
 
-def convert(mdtex):
-    ''' converts recursively the mdTeX-mixture to HTML with MathML '''
+def convert(mdtex, extensions=[]):
+    ''' converts recursively the Markdown-LaTeX-mixture to HTML with MathML '''
     found = False
     # find first $$-formula:
     parts = re.split('\${2}', mdtex, 2)
@@ -97,5 +97,5 @@ def convert(mdtex):
             result = convert(parts[0]+mathml+incomplete)
     if not found:
         # no more formulas found
-        result = md2html(mdtex)
+        result = md2html(mdtex, extensions=extensions)
     return result

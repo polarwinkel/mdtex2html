@@ -35,6 +35,12 @@ and convert your mdTeX with something like
 
 passing any mdTeX-Code to `mdtex2html.convert()`.
 
+### Markdown-Extensions
+
+Starting with v1.1 you can use python-markdown-extensions for i.e. tables, definition-lists, html-attributes and much more by passing a list of the extension(s) to be used to the `convert`-command as described in the [python-markdown documentation](https://python-markdown.github.io/extensions/).
+
+For example `mdtex2html.convert('Hello green\n{: style="color:green" }', extensions=['attr_list'])` will make use of the extension `attr_list`.
+
 ## Dependencies
 
 This depends on:
