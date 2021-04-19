@@ -24,12 +24,22 @@ page = '''
 <html>
     <head>
         <title>Testserver for mdtex2html</title>
+        <style>
+            .tooltip .tooltiptext {
+                display: none;
+            }
+            .tooltip:hover .tooltiptext {
+                display: inline;
+                border-radius: 0.3em;
+                background-color: #777;
+                position: fixed;
+            }
+        </style>
     </head>
     <body>
         <h1>Testserver for <code>mdtex2html</code></h1>
         <h2><code>mdtex</code>-Code</h2>
-        <textarea oninput="render()" id="mdtexCode" rows="5" cols="72">
-        </textarea><br />
+        <textarea oninput="render()" id="mdtexCode" rows="5" cols="72"></textarea><br />
         <button onclick="render()">type or click to render the code</button>
         <h2>Rendering</h2>
         <div id="mathmlView" style="border:1px solid silver;"></div>

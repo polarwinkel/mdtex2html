@@ -6,7 +6,7 @@ The Formulas will be in MathML-Format.
 block-equations need to start with $$ or \[
 inline-equations start with \( or $
 
-version 1.2.0beta1
+version 1.2.0
 
 (c) 2020-2021 by Dirk Winkel
 
@@ -30,8 +30,8 @@ from latex2mathml.converter import convert as tex2mathml
 from markdown import markdown as md2html
 import re
 
-incomplete = '<font color="orange">&#9888;</font>'
-convError = '<font color="red">&#9888;</font>'
+incomplete = '<font style="color:orange;" class="tooltip">&#9888;<span class="tooltiptext">formula incomplete</span></font>'
+convError = '<font style="color:red" class="tooltip">&#9888;<span class="tooltiptext">LaTeX-convert-error</span></font>'
 
 def convert(mdtex, extensions=[], splitParagraphs=True):
     ''' converts recursively the Markdown-LaTeX-mixture to HTML with MathML '''

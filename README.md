@@ -35,6 +35,22 @@ and convert your mdTeX with something like
 
 passing any mdTeX-Code to `mdtex2html.convert()`.
 
+### Extra
+
+You may want to (but don't need to) include this css-snippet on your page to hide error message texts, only showing on mouse-over:
+
+```
+.tooltip .tooltiptext {
+    display: none;
+}
+.tooltip:hover .tooltiptext {
+    display: inline;
+    border-radius: 0.3em;
+    background-color: #777;
+    position: fixed;
+}
+```
+
 ### Markdown-Extensions
 
 Starting with v1.1 you can use python-markdown-extensions for i.e. tables, definition-lists, html-attributes and much more by passing a list of the extension(s) to be used to the `convert`-command as described in the [python-markdown documentation](https://python-markdown.github.io/extensions/).
