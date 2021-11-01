@@ -43,9 +43,33 @@ def convert(mdtex, extensions=[], splitParagraphs=True):
         for part in parts:
             result += convert(part, extensions, splitParagraphs=False)
         return result
-    # find first $$-formula:
-    parts = re.split('\${2}', mdtex, 2)
+    # skip code-blocks:
+    parts = re.split('```', mdtex, 2)
     if len(parts)>1:
+        found = True
+        result = convert(parts[0], extensions, splitParagraphs=False)+'\n'
+        result += md2html('```'+parts[1]+'```', extensions=extensions)
+        if len(parts)==3:
+            result += convert(parts[2], extensions, splitParagraphs=False)
+    else:
+        parts = re.split('`', mdtex, 2)
+    if len(parts)>1:
+        found = True
+        codehtml = md2html('`'+parts[1]+'`', extensions=extensions)
+        #codehtml.removeprefix('<p>').removesuffix('</p>') #comes with python3.9
+        codehtml = codehtml[3:-4] # remove <p> and </p>
+        if parts[0].endswith('\n\n') or parts[0]=='': # make sure textblock starts before codehtml!
+            parts[0]=parts[0]+'&#x200b;'
+        if len(parts)==3:
+            if parts[2].startswith(' '):
+                codehtml = codehtml+' ' # heading whitespace is dropped py convert
+            result = convert(parts[0])[:-4]+codehtml+convert(parts[2], extensions, splitParagraphs=False)[3:]
+        else:
+            result = convert(parts[0])[:-4]+codehtml
+    # find first $$-formula:
+    else:
+        parts = re.split('\${2}', mdtex, 2)
+    if len(parts)>1 and not found:
         found = True
         result = convert(parts[0], extensions, splitParagraphs=False)+'\n'
         try:
