@@ -5,7 +5,7 @@ Testserver for mdtex2html
 '''
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from cgi import parse_header, parse_multipart   
+from cgi import parse_header, parse_multipart
 from multiprocessing import Process
 
 import os,sys,inspect
@@ -98,7 +98,7 @@ class HTTPServer_RequestHandler(BaseHTTPRequestHandler):
         postvars = self.parse_POST()
         if self.path == '/mdtex2html':
             try:
-                result = mdtex2html.convert(postvars, extensions=['tables', 'def_list', 'attr_list'])
+                result = mdtex2html.convert(postvars, extensions=['tables', 'def_list', 'fenced_code', 'tables', 'admonition', 'nl2br', 'sane_lists', 'toc'])
             except Exception as e:
                 result = 'ERROR: Could not convert the mdTeX to HTML:' + str(e)
         self.wfile.write(bytes(result, "utf8"))

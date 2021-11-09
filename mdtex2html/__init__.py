@@ -36,36 +36,34 @@ convError = '<font style="color:red" class="tooltip">&#9888;<span class="tooltip
 def convert(mdtex, extensions=[], splitParagraphs=True):
     ''' converts recursively the Markdown-LaTeX-mixture to HTML with MathML '''
     found = False
-    # handle all paragraphs separately (prevents aftereffects)
+    # entirely skip code-blocks:
+    parts = re.split('```', mdtex, 2)
+    if len(parts)>1:
+        found = True
+        result = convert(parts[0], extensions, splitParagraphs=False)+'\n'
+        result += md2html('```'+parts[1]+'```', extensions=extensions)+'\n'
+        if len(parts)==3:
+            result += convert(parts[2], extensions, splitParagraphs=False)
+        return result
+    # handle all paragraphs separately (prevents follow-up rendering errors)
     if splitParagraphs:
         parts = re.split("\n\n", mdtex)
         result = ''
         for part in parts:
             result += convert(part, extensions, splitParagraphs=False)
         return result
-    # skip code-blocks:
-    parts = re.split('```', mdtex, 2)
-    if len(parts)>1:
-        found = True
-        result = convert(parts[0], extensions, splitParagraphs=False)+'\n'
-        result += md2html('```'+parts[1]+'```', extensions=extensions)
-        if len(parts)==3:
-            result += convert(parts[2], extensions, splitParagraphs=False)
-    else:
-        parts = re.split('`', mdtex, 2)
+    # skip code-spans:
+    parts = re.split('`', mdtex, 2)
     if len(parts)>1:
         found = True
         codehtml = md2html('`'+parts[1]+'`', extensions=extensions)
-        #codehtml.removeprefix('<p>').removesuffix('</p>') #comes with python3.9
-        codehtml = codehtml[3:-4] # remove <p> and </p>
-        if parts[0].endswith('\n\n') or parts[0]=='': # make sure textblock starts before codehtml!
-            parts[0]=parts[0]+'&#x200b;'
+        codehtml = re.sub('^<[a-z]+>', '', codehtml) # remove opening tag
+        codehtml = re.sub('</[a-z]+>$', '', codehtml) # remove closing tag
         if len(parts)==3:
-            if parts[2].startswith(' '):
-                codehtml = codehtml+' ' # heading whitespace is dropped py convert
-            result = convert(parts[0])[:-4]+codehtml+convert(parts[2], extensions, splitParagraphs=False)[3:]
+            result = convert(parts[0]+'CoDeRePlAcEmEnT'+parts[2], extensions, splitParagraphs=False)
         else:
-            result = convert(parts[0])[:-4]+codehtml
+            result = convert(parts[0]+'CoDeRePlAcEmEnT', extensions, splitParagraphs=False)
+        result = re.sub('CoDeRePlAcEmEnT', codehtml, result)
     # find first $$-formula:
     else:
         parts = re.split('\${2}', mdtex, 2)
