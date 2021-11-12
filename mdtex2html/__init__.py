@@ -28,7 +28,7 @@ version 1.2.0
 
 from latex2mathml.converter import convert as tex2mathml
 from markdown import markdown as md2html
-import re
+import re, random, string
 
 incomplete = '<font style="color:orange;" class="tooltip">&#9888;<span class="tooltiptext">formula incomplete</span></font>'
 convError = '<font style="color:red" class="tooltip">&#9888;<span class="tooltiptext">LaTeX-convert-error</span></font>'
@@ -59,11 +59,12 @@ def convert(mdtex, extensions=[], splitParagraphs=True):
         codehtml = md2html('`'+parts[1]+'`', extensions=extensions)
         codehtml = re.sub('^<[a-z]+>', '', codehtml) # remove opening tag
         codehtml = re.sub('</[a-z]+>$', '', codehtml) # remove closing tag
+        ranString = ''.join(random.choice(string.ascii_letters) for i in range(16))
         if len(parts)==3:
-            result = convert(parts[0]+'CoDeRePlAcEmEnT'+parts[2], extensions, splitParagraphs=False)
+            result = convert(parts[0]+'CoDeRePlAcEmEnT'+ranString+parts[2], extensions, splitParagraphs=False)
         else:
-            result = convert(parts[0]+'CoDeRePlAcEmEnT', extensions, splitParagraphs=False)
-        result = re.sub('CoDeRePlAcEmEnT', codehtml, result)
+            result = convert(parts[0]+'CoDeRePlAcEmEnT'+ranString, extensions, splitParagraphs=False)
+        result = re.sub('CoDeRePlAcEmEnT'+ranString, codehtml, result)
     # find first $$-formula:
     else:
         parts = re.split('\${2}', mdtex, 2)
