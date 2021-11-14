@@ -64,7 +64,7 @@ def convert(mdtex, extensions=[], splitParagraphs=True):
             result = convert(parts[0]+'CoDeRePlAcEmEnT'+ranString+parts[2], extensions, splitParagraphs=False)
         else:
             result = convert(parts[0]+'CoDeRePlAcEmEnT'+ranString, extensions, splitParagraphs=False)
-        result = re.sub('CoDeRePlAcEmEnT'+ranString, codehtml, result)
+        result = result.replace('CoDeRePlAcEmEnT'+ranString, codehtml)
     # find first $$-formula:
     else:
         parts = re.split('\${2}', mdtex, 2)
