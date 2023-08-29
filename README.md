@@ -70,7 +70,8 @@ The dependencies will be installed when installing using pip.
 
 The Firefox browser will display the result smoothly, as well as Safari (according to user reports).
 
-Just be aware that the Chromium-engine (Browsers: Chrome, Edge, ...) still is not able to render MathML properly, but rumors say that in 2020 work has started again to make that happen, so maybe you want to check the status there.
+~~Just be aware that the Chromium-engine (Browsers: Chrome, Edge, ...) still is not able to render MathML properly, but rumors say that in 2020 work has started again to make that happen, so maybe you want to check the status there.~~
+In 2023 MathML Core got finally supported by the Blink-Engine of Chrome (and therefore Edge etc.). So this works now in all mainstream-browsers.
 
 ## Credits
 
