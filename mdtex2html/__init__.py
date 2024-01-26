@@ -97,6 +97,7 @@ def convert(mdtex, extensions=[], splitParagraphs=True):
             result = convert(parts[0]+mathml+incomplete, extensions, splitParagraphs=False)
     # else find first \[..\]-equation:
     else:
+        mdtex = mdtex.replace(r'\$', '$')
         parts = re.split(r'\\\[', mdtex, 1)
     if len(parts)>1 and not found:
         found = True
