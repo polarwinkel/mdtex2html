@@ -3,12 +3,13 @@
 This will convert Markdown with included LaTeX-equations to HTML.
 The Formulas will be in MathML-Format.
 
-block-equations need to start with $$ or \[
-inline-equations start with \( or $
+- block-equations need to start with $$ or \[
+- inline-equations start with \( or $
+- $-signs can be escaped with \, so \$ will be returned as $
 
-version 1.2.0
+version 1.3.0
 
-(c) 2020-2021 by Dirk Winkel
+(c) 2020-2024 by Dirk Winkel
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -79,9 +80,9 @@ def convert(mdtex, extensions=[], splitParagraphs=True):
             result += convert(parts[2], extensions, splitParagraphs=False)
         else:
             result += '<div class="blockformula">'+incomplete+'</div>'
-    # else find first $-formulas:
+    # else find first $-formulas, excluding \$:
     else:
-        parts = re.split('\${1}', mdtex, 2)
+        parts = re.split(r'(?<!\\)\${1}', mdtex, 2)
     if len(parts)>1 and not found:
         found = True
         try:
