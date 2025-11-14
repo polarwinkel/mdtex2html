@@ -43,7 +43,7 @@ def convert(mdtex, extensions=[], splitParagraphs=True):
         md.convert(mdtex)
         mdtex = mdtex.replace('[TOC]', md.toc)
     # entirely skip code-blocks:
-    parts = re.split('```', mdtex, 2)
+    parts = re.split('```', mdtex, maxsplit=2)
     if len(parts)>1:
         found = True
         result = convert(parts[0], extensions, splitParagraphs=False)+'\n'
@@ -59,7 +59,7 @@ def convert(mdtex, extensions=[], splitParagraphs=True):
             result += convert(part, extensions, splitParagraphs=False)
         return result
     # skip code-spans:
-    parts = re.split('`', mdtex, 2)
+    parts = re.split('`', mdtex, maxsplit=2)
     if len(parts)>1:
         found = True
         codehtml = md2html('`'+parts[1]+'`', extensions=extensions)
@@ -73,7 +73,7 @@ def convert(mdtex, extensions=[], splitParagraphs=True):
         result = result.replace('CoDeRePlAcEmEnT'+ranString, codehtml)
     # find first $$-formula:
     else:
-        parts = re.split('\${2}', mdtex, 2)
+        parts = re.split('\${2}', mdtex, maxsplit=2)
     if len(parts)>1 and not found:
         found = True
         result = convert(parts[0], extensions, splitParagraphs=False)+'\n'
@@ -87,7 +87,7 @@ def convert(mdtex, extensions=[], splitParagraphs=True):
             result += '<div class="blockformula">'+incomplete+'</div>'
     # else find first $-formulas, excluding \$:
     else:
-        parts = re.split(r'(?<!\\)\${1}', mdtex, 2)
+        parts = re.split(r'(?<!\\)\${1}', mdtex, maxsplit=2)
     if len(parts)>1 and not found:
         found = True
         try:
@@ -103,11 +103,11 @@ def convert(mdtex, extensions=[], splitParagraphs=True):
     # else find first \[..\]-equation:
     else:
         mdtex = mdtex.replace(r'\$', '$')
-        parts = re.split(r'\\\[', mdtex, 1)
+        parts = re.split(r'\\\[', mdtex, maxsplit=1)
     if len(parts)>1 and not found:
         found = True
         result = convert(parts[0], extensions, splitParagraphs=False)+'\n'
-        parts = re.split(r'\\\]', parts[1], 1)
+        parts = re.split(r'\\\]', parts[1], maxsplit=1)
         try:
             result += '<div class="blockformula">'+tex2mathml(parts[0])+'</div>\n'
         except:
@@ -118,10 +118,10 @@ def convert(mdtex, extensions=[], splitParagraphs=True):
             result += '<div class="blockformula">'+incomplete+'</div>'
     # else find first \(..\)-equation:
     else:
-        parts = re.split(r'\\\(', mdtex, 1)
+        parts = re.split(r'\\\(', mdtex, maxsplit=1)
     if len(parts)>1 and not found:
         found = True
-        subp = re.split(r'\\\)', parts[1], 1)
+        subp = re.split(r'\\\)', parts[1], maxsplit=1)
         try:
             mathml = tex2mathml(subp[0])
         except:
