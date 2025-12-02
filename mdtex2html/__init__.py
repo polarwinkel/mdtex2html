@@ -7,7 +7,7 @@ The Formulas will be in MathML-Format.
 - inline-equations start with \( or $
 - $-signs can be escaped with \, so \$ will be returned as $
 
-version 1.3.1
+version 1.3.2
 
 (c) 2020-2025 by Dirk Winkel
 
